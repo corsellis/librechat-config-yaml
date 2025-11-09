@@ -2848,3 +2848,38 @@ endpoints:
       summaryModel: "grok-beta"
       forcePrompt: false
       modelDisplayLabel: "Grok"
+
+
+# ========================================
+# MCP SERVERS CONFIGURATION
+# ========================================
+# Model Context Protocol servers for extended functionality
+# Documentation: https://www.librechat.ai/docs/features/mcp
+
+mcpServers:
+  # OpenMemory - Persistent Memory Across Conversations
+  # Hosted service at app.openmemory.dev
+  openmemory-hosted:
+    type: streamable-http
+    url: "https://api.openmemory.dev/mcp"
+    headers:
+      Authorization: "Bearer ${OPENMEMORY_API_KEY}"
+      X-User-ID: "{{LIBRECHAT_USER_ID}}"
+      X-User-Email: "{{LIBRECHAT_USER_EMAIL}}"
+    initTimeout: 15000
+    timeout: 30000
+    serverInstructions: |
+      OpenMemory provides persistent memory across all conversations and devices.
+      
+      Use this to:
+      - Remember user preferences and context
+      - Store important information for future reference
+      - Track ongoing projects and decisions
+      - Maintain continuity across sessions and tools
+      
+      Memory operations available:
+      - add_memories: Store new information
+      - search_memory: Find relevant memories
+      - update_memory: Modify existing memories
+      - delete_memory: Remove memories
+    chatMenu: true
