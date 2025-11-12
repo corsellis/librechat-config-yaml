@@ -2857,6 +2857,108 @@ endpoints:
 # Documentation: https://www.librechat.ai/docs/features/mcp
 
 mcpServers:
+  # Desktop Commander - System Operations
+  # Provides file system access, command execution, and system control
+  desktop-commander:
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "/Users/jamescorsellis"]
+    timeout: 30000
+    initTimeout: 10000
+    serverInstructions: |
+      Desktop Commander provides system-level operations including:
+      - File system access and manipulation
+      - Command execution and process management
+      - System information and monitoring
+      
+      Use for local file operations, running scripts, and system tasks.
+    chatMenu: true
+
+  # Memory Management - Persistent Context
+  # Provides memory storage and retrieval across conversations
+  memory:
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-memory"]
+    timeout: 30000
+    initTimeout: 10000
+    serverInstructions: |
+      Memory server for storing and retrieving context across conversations.
+      Use to maintain conversation history and important information.
+    chatMenu: true
+
+  # Sequential Thinking - Advanced Reasoning
+  # Provides structured thinking and reasoning capabilities
+  sequential-thinking:
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    timeout: 60000
+    initTimeout: 15000
+    serverInstructions: |
+      Sequential thinking server for complex reasoning tasks.
+      Helps break down problems into logical steps and maintain reasoning chains.
+    chatMenu: true
+
+  # Puppeteer - Web Browser Automation
+  # Provides browser control and web scraping capabilities
+  puppeteer:
+    command: npx
+    args: ["-y", "@modelcontextprotocol/server-puppeteer"]
+    timeout: 60000
+    initTimeout: 15000
+    serverInstructions: |
+      Puppeteer server for web browser automation.
+      Can navigate websites, extract information, and automate web interactions.
+      Do not access local files or internal IP addresses.
+    chatMenu: true
+
+  # Exa Web Search - Internet Search Capabilities
+  # Provides advanced web search and research capabilities
+  exa-search:
+    type: streamable-http
+    url: "https://api.exa.ai/mcp"
+    headers:
+      X-API-Key: "${EXA_API_KEY}"
+      X-User-ID: "{{LIBRECHAT_USER_ID}}"
+    timeout: 30000
+    initTimeout: 10000
+    serverInstructions: |
+      Exa provides advanced web search capabilities.
+      Use for researching current information, finding documentation, and web content.
+    chatMenu: true
+
+  # GitHub MCP Server - GitHub Integration
+  # Provides GitHub repository operations
+  github:
+    type: streamable-http
+    url: "https://api.github.com/mcp"
+    customUserVars:
+      PAT_TOKEN:
+        title: "GitHub PAT Token"
+        description: "Personal Access Token for GitHub. Get yours at <a href='https://github.com/settings/tokens' target='_blank'>GitHub Settings</a>"
+    headers:
+      Authorization: "Bearer {{PAT_TOKEN}}"
+      X-User-ID: "{{LIBRECHAT_USER_ID}}"
+    timeout: 30000
+    initTimeout: 10000
+    startup: false  # Requires user credentials before starting
+    serverInstructions: |
+      GitHub MCP server for repository operations.
+      Can read, write, and manage GitHub repositories.
+      Requires a Personal Access Token to function.
+    chatMenu: true
+
+  # Spotify MCP Server - Music Control
+  # Optional: Spotify integration for music control
+  # spotify:
+  #   type: streamable-http
+  #   url: "https://mcp-spotify-oauth-example.account.workers.dev/mcp"
+  #   initTimeout: 150000  # Higher timeout for OAuth flow
+  #   timeout: 30000
+  #   serverInstructions: |
+  #     Spotify MCP server for music control.
+  #     Provides playback control, search, and playlist management.
+  #     Requires OAuth authentication on first use.
+  #   chatMenu: true
+
   # OpenMemory - Persistent Memory Across Conversations
   # Hosted service at app.openmemory.dev
   openmemory-hosted:
