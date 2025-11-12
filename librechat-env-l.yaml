@@ -2857,58 +2857,40 @@ endpoints:
 # Documentation: https://www.librechat.ai/docs/features/mcp
 
 mcpServers:
-  # Desktop Commander - System Operations
-  # Provides file system access, command execution, and system control
-  desktop-commander:
-    command: npx
-    args: ["-y", "@modelcontextprotocol/server-filesystem", "/Users/jamescorsellis"]
-    timeout: 30000
-    initTimeout: 10000
-    serverInstructions: |
-      Desktop Commander provides system-level operations including:
-      - File system access and manipulation
-      - Command execution and process management
-      - System information and monitoring
-      
-      Use for local file operations, running scripts, and system tasks.
-    chatMenu: true
+  # NOTE: Commented out local MCP servers that won't work on Railway cloud deployment
+  # These require local system access and npx commands which aren't available on Railway
+  
+  # # Desktop Commander - System Operations (LOCAL ONLY - WON'T WORK ON RAILWAY)
+  # desktop-commander:
+  #   command: npx
+  #   args: ["-y", "@modelcontextprotocol/server-filesystem", "/path"]
+  #   timeout: 30000
+  #   initTimeout: 10000
+  #   chatMenu: true
 
-  # Memory Management - Persistent Context
-  # Provides memory storage and retrieval across conversations
-  memory:
-    command: npx
-    args: ["-y", "@modelcontextprotocol/server-memory"]
-    timeout: 30000
-    initTimeout: 10000
-    serverInstructions: |
-      Memory server for storing and retrieving context across conversations.
-      Use to maintain conversation history and important information.
-    chatMenu: true
+  # # Memory Management (LOCAL ONLY - WON'T WORK ON RAILWAY)
+  # memory:
+  #   command: npx
+  #   args: ["-y", "@modelcontextprotocol/server-memory"]
+  #   timeout: 30000
+  #   initTimeout: 10000
+  #   chatMenu: true
 
-  # Sequential Thinking - Advanced Reasoning
-  # Provides structured thinking and reasoning capabilities
-  sequential-thinking:
-    command: npx
-    args: ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    timeout: 60000
-    initTimeout: 15000
-    serverInstructions: |
-      Sequential thinking server for complex reasoning tasks.
-      Helps break down problems into logical steps and maintain reasoning chains.
-    chatMenu: true
+  # # Sequential Thinking (LOCAL ONLY - WON'T WORK ON RAILWAY)
+  # sequential-thinking:
+  #   command: npx
+  #   args: ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+  #   timeout: 60000
+  #   initTimeout: 15000
+  #   chatMenu: true
 
-  # Puppeteer - Web Browser Automation
-  # Provides browser control and web scraping capabilities
-  puppeteer:
-    command: npx
-    args: ["-y", "@modelcontextprotocol/server-puppeteer"]
-    timeout: 60000
-    initTimeout: 15000
-    serverInstructions: |
-      Puppeteer server for web browser automation.
-      Can navigate websites, extract information, and automate web interactions.
-      Do not access local files or internal IP addresses.
-    chatMenu: true
+  # # Puppeteer (LOCAL ONLY - WON'T WORK ON RAILWAY)
+  # puppeteer:
+  #   command: npx
+  #   args: ["-y", "@modelcontextprotocol/server-puppeteer"]
+  #   timeout: 60000
+  #   initTimeout: 15000
+  #   chatMenu: true
 
   # Exa Web Search - Internet Search Capabilities
   # Provides advanced web search and research capabilities
