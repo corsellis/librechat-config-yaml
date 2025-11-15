@@ -2945,7 +2945,7 @@ mcpServers:
   # Hosted service at app.openmemory.dev
   openmemory-hosted:
     type: streamable-http
-    url: "https://api.openmemory.dev/mcp"
+    url: "https://api.mem0.ai/mcp"
     headers:
       Authorization: "Bearer ${OPENMEMORY_API_KEY}"
       X-User-ID: "{{LIBRECHAT_USER_ID}}"
