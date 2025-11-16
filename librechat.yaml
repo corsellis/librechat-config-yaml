@@ -1,0 +1,225 @@
+# LibreChat Configuration with Presentation System
+# For Jamie's Railway deployment
+# Version: 1.2.4
+# Updated: November 2025
+
+# Configuration version (required)
+version: 1.2.4
+
+# Cache settings
+cache: true
+
+# Custom interface configuration
+interface:
+  customWelcome: 'Welcome to LibreChat with Presentation System!'
+  fileSearch: true
+  privacyPolicy:
+    externalUrl: 'https://librechat.ai/privacy-policy'
+    openNewTab: true
+  termsOfService:
+    externalUrl: 'https://librechat.ai/tos'
+    openNewTab: true
+  endpointsMenu: true
+  modelSelect: true
+  parameters: true
+  sidePanel: true
+  presets: true
+  prompts: true
+  bookmarks: true
+  multiConvo: true
+  agents: true
+  fileCitations: true
+
+# Registration settings (customize as needed)
+registration:
+  socialLogins:
+    - "google"
+    - "github"
+    - "openid"
+
+# Endpoints configuration
+endpoints:
+  # Custom endpoints with presentation support
+  custom:
+    # Claude with Presentation System
+    - name: "Claude with Presentations"
+      apiKey: "${ANTHROPIC_API_KEY}"
+      baseURL: "https://api.anthropic.com/v1"
+      models:
+        default: 
+          - "claude-3-5-sonnet-20241022"
+          - "claude-3-5-haiku-20241022"
+          - "claude-3-opus-20240229"
+      titleConvo: true
+      titleModel: "claude-3-5-haiku-20241022"
+      modelDisplayLabel: "Claude"
+      
+      # System message with presentation capabilities
+      systemMessage: |
+        You have access to a professional presentation generation service at https://librechat-presentation-system-production.up.railway.app
+        
+        When users request presentations, you can create McKinsey-style or Marwyn-style PowerPoint files.
+        
+        To generate a presentation, use the following API structure:
+        
+        POST to: https://librechat-presentation-system-production.up.railway.app/api/presentations/generate
+        
+        Request format:
+        {
+          "type": "mckinsey" or "marwyn",
+          "config": {
+            "organisation": "Company Name",
+            "spelling": "UK" or "US"  // default: UK
+          },
+          "slides": [
+            {"method": "createTitleSlide", "params": ["Title", "Subtitle", "Author/Date"]},
+            {"method": "createExecutiveSummary", "params": ["Title", [
+              {"value": "Metric1", "label": "Label1", "sublabel": "Detail1"},
+              {"value": "Metric2", "label": "Label2", "sublabel": "Detail2", "highlight": true},
+              {"value": "Metric3", "label": "Label3", "sublabel": "Detail3"}
+            ]]},
+            {"method": "createKeyMessages", "params": ["Title", ["Message 1", "Message 2", "Message 3"]]},
+            {"method": "createDataTable", "params": ["Title", ["Header1", "Header2"], [["Row1Col1", "Row1Col2"]]]},
+            {"method": "createFrameworkSlide", "params": ["Title", [
+              {"title": "Box1", "content": ["Point1", "Point2"]},
+              {"title": "Box2", "content": ["Point1", "Point2"]},
+              {"title": "Box3", "content": ["Point1", "Point2"]}
+            ]]},
+            {"method": "createTimeline", "params": ["Title", [
+              {"phase": "Phase 1", "date": "Q1 2024", "items": ["Item1", "Item2"]},
+              {"phase": "Phase 2", "date": "Q2 2024", "items": ["Item1", "Item2"]}
+            ]]},
+            {"method": "createNextSteps", "params": ["Title", [
+              {"action": "Action 1", "owner": "Owner Name", "timeline": "By date"},
+              {"action": "Action 2", "owner": "Owner Name", "timeline": "By date"}
+            ]]}
+          ]
+        }
+        
+        After successful generation, provide users with a formatted download link:
+        https://librechat-presentation-system-production.up.railway.app/api/presentations/download/[filename]
+        
+        McKinsey template: Blue professional theme for consulting/strategy
+        Marwyn template: Orange theme for investment memos and portfolio reviews
+        
+        Always:
+        - Use UK spelling unless user specifies US
+        - Include clear structure with title, summary, and next steps
+        - Keep one key message per slide
+        - Provide download link prominently
+        - Explain what was created
+
+    # OpenAI Models
+    - name: "OpenAI"
+      apiKey: "${OPENAI_API_KEY:user_provided}"
+      baseURL: "https://api.openai.com/v1"
+      models:
+        default:
+          - "gpt-4o"
+          - "gpt-4o-mini"
+          - "gpt-4-turbo"
+          - "gpt-3.5-turbo"
+          - "o1-preview"
+          - "o1-mini"
+      titleConvo: true
+      titleModel: "gpt-4o-mini"
+      modelDisplayLabel: "OpenAI"
+
+    # Google Models
+    - name: "Google"
+      apiKey: "${GOOGLE_KEY:user_provided}"
+      baseURL: "https://generativelanguage.googleapis.com/v1beta"
+      models:
+        default:
+          - "gemini-1.5-pro"
+          - "gemini-1.5-flash"
+          - "gemini-pro"
+          - "gemini-pro-vision"
+      titleConvo: true
+      titleModel: "gemini-1.5-flash"
+      modelDisplayLabel: "Google"
+
+# Tools configuration
+tools:
+  # Web Search (if configured)
+  - name: "web_search"
+    enabled: true
+    description: "Search the web for information"
+    
+  # Presentation Generator Tool
+  - name: "presentation_generator"
+    description: "Generate professional PowerPoint presentations"
+    type: "custom"
+    endpoint: "https://librechat-presentation-system-production.up.railway.app/api/presentations/generate"
+    method: "POST"
+    headers:
+      Content-Type: "application/json"
+    schema:
+      type: object
+      required: ["type", "slides"]
+      properties:
+        type:
+          type: string
+          enum: ["mckinsey", "marwyn"]
+          description: "Presentation template type"
+        config:
+          type: object
+          properties:
+            organisation:
+              type: string
+              description: "Organization name for branding"
+            spelling:
+              type: string
+              enum: ["UK", "US"]
+              default: "UK"
+              description: "Spelling preference"
+        slides:
+          type: array
+          description: "Array of slide definitions"
+          items:
+            type: object
+            required: ["method", "params"]
+            properties:
+              method:
+                type: string
+                description: "Slide creation method name"
+              params:
+                type: array
+                description: "Parameters for the slide method"
+
+# Agents configuration (if using)
+agents:
+  enabled: true
+  tools:
+    - presentation_generator
+    - web_search
+
+# Model Context Protocol servers (if configured)
+mcpServers:
+  # Add your MCP servers here if needed
+  # Example:
+  # - name: "desktop-commander"
+  #   command: "npx"
+  #   args: ["-y", "desktop-commander"]
+
+# File configuration
+fileConfig:
+  endpoints:
+    all:
+      disabled: false
+      fileLimit: 10
+      fileSizeLimit: 50  # Maximum file size in MB
+      supportedMimeTypes:
+        - "image/png"
+        - "image/jpeg"
+        - "image/gif"
+        - "image/webp"
+        - "application/pdf"
+        - "text/plain"
+        - "text/csv"
+        - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        - "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        - "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        - "application/json"
+        - "text/markdown"
+        - "text/html"
