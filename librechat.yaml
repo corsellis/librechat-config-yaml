@@ -199,8 +199,7 @@ mcpServers:
   # Gemini Search Integration - Persistent RAG Retrieval System
   gemini-search:
     type: streamable-http
-    # UPDATE THIS URL: Replace with your actual Railway domain
-    # Should be something like: gemini-search-mcp-production-xxx.up.railway.app
+    # Railway deployment URL - Active and configured
     url: https://gemini-search-mcp-production.up.railway.app/mcp
     timeout: 60000
     serverInstructions: |
