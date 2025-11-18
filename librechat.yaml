@@ -196,9 +196,79 @@ agents:
 
 # Model Context Protocol servers (if configured)
 mcpServers:
-  # Add your MCP servers here if needed
+  # Gemini Search Integration - Persistent RAG Retrieval System
+  gemini-search:
+    type: streamable-http
+    # UPDATE THIS URL: Replace with your actual Railway domain
+    # Should be something like: gemini-search-mcp-production-xxx.up.railway.app
+    url: https://gemini-search-mcp-production.up.railway.app/mcp
+    timeout: 60000
+    serverInstructions: |
+      ## Gemini Search System (/GS command)
+      
+      You are integrated with a persistent Gemini RAG retrieval system.
+      When the user types /GS or asks to continue Gemini research:
+      
+      ### Initial Setup
+      1. Check if /gemini_research/research_index.json exists using filesystem tools
+      2. If not, this is the first use - welcome the user to Gemini Search
+      3. If exists, load existing research projects from the index
+      
+      ### Research Code Workflow
+      When user triggers /GS:
+      - Ask: "Do you have a research code? Type it, say 'list' to see projects, or 'new' to create"
+      - For 'list': Show all projects with descriptions and last used dates
+      - For 'new': Get code (UPPERCASE_UNDERSCORE format) and description
+      - For existing: Validate against index
+      
+      ### Search Execution
+      1. Get the search query from user
+      2. Optionally ask for corpus_id (use 'default' if not provided)
+      3. Call gemini_search tool with parameters:
+         - query: search text
+         - research_code: project code  
+         - corpus_id: (optional, default: 'default')
+         - description: context about this search
+      
+      ### Present Results
+      After search completes:
+      - Show the file path where results were saved
+      - Display summary of chunks retrieved
+      - Show preview of top 2 chunks
+      - Ask: "Would you like me to read the full chunks for detailed analysis?"
+      
+      ### Continuing Research
+      When user says "Continue [X] research" in a new conversation:
+      1. Read /gemini_research/research_index.json
+      2. Find matching project by keywords
+      3. List available date folders
+      4. Load most recent or user-selected date
+      5. Read metadata.json for context
+      6. Offer to review existing or perform new search
+      
+      ### Commands
+      - /GS - Start new search or manage projects
+      - /GS list - Show all research projects
+      - /GS stats - Display statistics
+      - "Continue [X] research" - Resume previous work
+      
+      ### File Structure
+      All data saves to: /gemini_research/
+      - research_index.json - master project list
+      - PROJECT_CODE/YYYY-MM-DD/ - search results by date
+      - Each search creates: metadata.json, chunk_XXX.txt, summary.txt
+      
+      ### Important Notes
+      - Research codes must be UPPERCASE with underscores (e.g., LECHAMEAU_BRAND, PROJECT_ATLAS)
+      - All data persists to filesystem - no memory needed
+      - Each search adds to the knowledge base
+      - Cross-conversation access to all research
+      
+      The system currently uses mock data for testing. Real Gemini API integration pending.
+
+  # Add your other MCP servers here if needed
   # Example:
-  # - name: "desktop-commander"
+  # desktop-commander:
   #   command: "npx"
   #   args: ["-y", "desktop-commander"]
 
