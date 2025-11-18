@@ -1,166 +1,52 @@
-# LibreChat Config Files aka `librechat.yaml` Collection
-See the Custom Configuration Guide for more information: [LibreChat Custom Config Guide](https://www.librechat.ai/docs/configuration/librechat_yaml/setup)
+# LibreChat Configuration for Railway
 
-## How to use
-- Choose a file that corresponds to your needs
-- Copy its **raw** URL (provided below)
-- In your LibreChat `.env` file, add `CONFIG_PATH="https://raw-config-file-url/librechat.yaml"`
-  - ⚠️ Replace the URL with one provided below!
+## ⚠️ IMPORTANT: ONE CONFIG FILE ONLY ⚠️
 
-## Available Configuration Files
-
-| File Name | API Keys | File Strategy |
-|-----------|----------|---------------|
-| librechat-env-l.yaml | env | local |
-| librechat-env-f.yaml | env | firebase |
-| librechat-up-l.yaml | user_provided | local |
-| librechat-up-f.yaml | user_provided | firebase |
-
-## LibreChat Demo & Quick Deployments
-
-<p align="left">
-  <a href="https://demo.librechat.cfd/">
-      <img src="https://github.com/LibreChat-AI/librechat-config-yaml/assets/32828263/d3a1e88f-fce0-4a8e-8c1d-5901a3e1c2dd">
-  </a>
-</p>
-
-<p align="left">
-<a href="https://railway.app/template/b5k2mn?referralCode=HI9hWz">
-  <img src="https://railway.app/button.svg" alt="Deploy on Railway">
-</a>
-</p>
-
-## Contributions
-Contributions are welcome!
-
-**Important:** Instead of manually updating individual files, please use/update the scripts provided in the [scripts folder](./scripts/). See the [scripts README](./scripts/README.md) for more information on how to use these scripts for file generation and updates.
-
-> **❗Note:**
-> - Updates to the model list are always welcome
-> - Adding endpoints requires also updating the scripts
-> - Keep the APIs alphabetized
-> - Provide a logo for new endpoints
-> - When adding a new endpoint, add a note in the bottom of this README with the name and URL to get an API key
-   
-## File Descriptions
-### `librechat-env-l.yaml`
-Basic configuration:
-- API Keys: .env variables
-- File Strategy: `local`
-- .env config:
-  ```yaml
-  CONFIG_PATH=https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-env-l.yaml
-  APIPIE_API_KEY=
-  COHERE_API_KEY=
-  DEEPSEEK_API_KEY=
-  FIREWORKS_API_KEY=
-  GITHUB_TOKEN=
-  GLHF_API_KEY
-  GROQ_API_KEY=
-  HUGGINGFACE_TOKEN=
-  HYPERBOLIC_API_KEY=
-  KLUSTER_API_KEY=
-  MISTRAL_API_KEY=
-  NANOGPT_API_KEY
-  NVIDIA_API_KEY=
-  OPENROUTER_KEY=
-  PERPLEXITY_API_KEY=
-  SAMBANOVA_API_KEY=
-  TOGETHERAI_API_KEY=
-  UNIFY_API_KEY=
-  XAI_API_KEY=
-  ```
-### `librechat-env-f.yaml`
-Basic configuration:
-- API Keys: .env variables
-- File Strategy: `firebase`
-- .env config:
-  ```yaml
-  CONFIG_PATH=https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-env-f.yaml
-  APIPIE_API_KEY=
-  COHERE_API_KEY=
-  DEEPSEEK_API_KEY=
-  FIREWORKS_API_KEY=
-  GITHUB_TOKEN=
-  GLHF_API_KEY
-  GROQ_API_KEY=
-  HUGGINGFACE_TOKEN=
-  HYPERBOLIC_API_KEY=
-  KLUSTER_API_KEY=
-  MISTRAL_API_KEY=
-  NANOGPT_API_KEY
-  NVIDIA_API_KEY=
-  OPENROUTER_KEY=
-  PERPLEXITY_API_KEY=
-  SAMBANOVA_API_KEY=
-  TOGETHERAI_API_KEY=
-  UNIFY_API_KEY=
-  XAI_API_KEY=
-  ```
-
-### `librechat-up-f.yaml`
-Basic configuration:
-- API Keys: `user_provided`
-- File Strategy: `firebase`
-- .env config:
-  ```yaml
-  CONFIG_PATH=https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-up-f.yaml
-  ```
-
-### `librechat-up-l.yaml`
-Basic configuration:
-- API Keys: `user_provided`
-- File Strategy: `local`
-- .env config:
-  ```yaml
-  CONFIG_PATH=https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-up-l.yaml
-  ```
-
-### `librechat-test.yaml`
-- Personal file used to test changes and configs
+### THE ACTIVE CONFIGURATION
+**File:** `librechat-env-l.yaml`  
+**Status:** ✅ **ACTIVE - USED BY RAILWAY**  
+**GitHub URL:** https://raw.githubusercontent.com/corsellis/librechat-config-yaml/main/librechat-env-l.yaml
 
 ---
 
-## Deprecated Files
-The following files are now deprecated and should not be used for new configurations:
+## DO NOT CREATE OTHER CONFIG FILES HERE
 
-### ~~`librechat.yaml`~~ (Deprecated)
-Update your `CONFIG_PATH` environment variable to: `https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-env.l.yaml`
+All other config variants have been archived to avoid confusion.
+If you need to test something, create it in a different directory.
 
-### ~~`librechat-hf.yaml`~~ (Deprecated)
-Update your `CONFIG_PATH` environment variable to: `https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-up-f.yaml`
+## How Railway Uses This File
 
-### ~~`librechat-aio.yaml`~~ (Deprecated)
-Update your `CONFIG_PATH` environment variable to: `https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-up-l.yaml`
+1. Railway LibreChat service has environment variable:
+   ```
+   CONFIG_PATH=https://raw.githubusercontent.com/corsellis/librechat-config-yaml/main/librechat-env-l.yaml
+   ```
 
-### ~~`librechat-rw.yaml`~~ (Deprecated)
-Update your `CONFIG_PATH` environment variable to: `https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-env-l.yaml`
+2. When you push changes to GitHub, Railway automatically picks them up
 
-### ~~`librechat-f.yaml`~~ (Deprecated)
-Update your `CONFIG_PATH` environment variable to: `https://raw.githubusercontent.com/LibreChat-AI/librechat-config-yaml/main/librechat-env-f.yaml`
+## To Make Changes
+
+```bash
+# Edit the file
+code librechat-env-l.yaml  # or nano/vim
+
+# Deploy changes
+git add librechat-env-l.yaml
+git commit -m "Description of changes"
+git push origin main
+```
+
+## MCP Servers Currently Configured
+
+- ✅ gemini-search (Gemini RAG system)
+- ✅ exa-search (Web search)
+- ✅ github (GitHub integration)
+- ✅ openmemory-hosted (Persistent memory)
+
+## Archived Files
+
+All other .yaml files have been moved to `/src/ARCHIVED_CONFIGS/`
+This was done to prevent confusion about which config is active.
 
 ---
 
-## Get an API key:
-
-| Provider | URL |
-|----------|-----|
-| APIpie | https://apipie.ai/dashboard/profile/api-keys |
-| Cohere | https://dashboard.cohere.com/api-keys |
-| DeepSeek | https://platform.deepseek.com/api_keys |
-| FireworksAI | https://fireworks.ai/ |
-| Github Models | https://github.com |
-| glhf.chat | https://glhf.chat |
-| groq | https://console.groq.com/keys |
-| HuggingFace | https://huggingface.co/settings/tokens |
-| Hyperbolic | https://app.hyperbolic.xyz/ |
-| Kluster | https://platform.kluster.ai/apikeys |
-| Mistral | https://mistral.ai/ |
-| NanoGPT | https://nano-gpt.com/api |
-| NVIDIA | https://build.nvidia.com/explore/discover |
-| OpenRouter | https://openrouter.ai/ |
-| Perplexity | https://docs.perplexity.ai/docs/getting-started |
-| SambaNova | https://cloud.sambanova.ai/apis |
-| TogetherAI | https://www.together.ai/ |
-| Unify | https://unify.ai/ |
-| X.AI (Grok) | https://api.x.ai/ |
+**Remember:** `librechat-env-l.yaml` is the ONLY config that matters for Railway!
