@@ -2892,6 +2892,30 @@ mcpServers:
   #   initTimeout: 15000
   #   chatMenu: true
 
+  # Gemini Search Integration - Persistent RAG Retrieval System
+  # Railway deployment - Active and configured
+  gemini-search:
+    type: streamable-http
+    url: "https://gemini-search-mcp-production.up.railway.app/mcp"
+    timeout: 60000
+    initTimeout: 15000
+    serverInstructions: |
+      ## Gemini Search System (/GS command)
+      
+      Persistent Gemini RAG retrieval system with filesystem storage.
+      When user types /GS or requests Gemini research:
+      
+      1. Search execution with gemini_search tool
+      2. Results saved to /gemini_research/
+      3. Cross-conversation persistence
+      4. Research codes in UPPERCASE_UNDERSCORE format
+      
+      Commands:
+      - /GS new - Create new research project
+      - /GS list - Show all projects
+      - /GS [CODE] - Continue existing research
+    chatMenu: true
+
   # Exa Web Search - Internet Search Capabilities
   # Provides advanced web search and research capabilities
   exa-search:
